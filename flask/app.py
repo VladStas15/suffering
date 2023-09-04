@@ -75,20 +75,11 @@ def get_latest_records():
 @app.route('/export', methods=['GET'])
 def export():
     db = get_db()
-
-    # Используйте свой собственный SQL-запрос для выборки данных из БД
     query = 'SELECT * FROM test'
-
     df = pd.read_sql_query(query, db)
-
-    # Сохраните данные в файл Excel
     output_file = 'exported_data.xlsx'
     df.to_excel(output_file, index=False)
-
-    # Закройте соединение с БД
     db.close()
-
-    # Отправьте файл пользователю
     return send_file(output_file, as_attachment=True)
 
 if __name__ == "__main__":
